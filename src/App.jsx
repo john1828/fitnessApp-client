@@ -11,50 +11,10 @@ import Workouts from './pages/Workouts';
 import './App.css'
 
 function App() {
-  const [user, setUser] = useState({
-      id: null,
-    });
-
-  function unsetUser(){
-    localStorage.clear();
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      fetch("https://fitnessapp-api-ln8u.onrender.com/users/details", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data._id) {
-            setUser({
-              id: data._id
-            });
-          } else {
-            setUser({
-              id: null
-            });
-          }
-        })
-        .catch(() => {
-          setUser({
-            id: null
-          });
-        });
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log(user);
-    console.log(localStorage);
-  }, [user]);
 
   return (
     <>
-      <UserProvider value={{ user, setUser, unsetUser }}>
+      <UserProvider>
         <Router>
           <AppNavbar />
           <Container>

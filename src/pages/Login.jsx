@@ -31,16 +31,11 @@ export default function Login() {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
-
-            if(data.access !== undefined){
-
-                console.log(data.access);
-            
+            if(data.access !== undefined){            
                 localStorage.setItem('token', data.access);
-                setUser({
-                    id: data._id
-                });
+
+                setUser({ id: data._id });
+
                 setEmail('');
                 setPassword('');
 
@@ -49,7 +44,7 @@ export default function Login() {
                     icon: "success",
                     text: "You are now logged in."
                 })
-            
+
             } else if (data.message == "Email and password do not match") {
 
                 Swal.fire({
@@ -79,10 +74,10 @@ export default function Login() {
 
     }, [email, password]);
 
-    return (    
+    return (
             (localStorage.length !== 0) ?
             <Navigate to="/workouts" />
-            :
+            :    
             <Form onSubmit={(e) => authenticate(e)}>
                 <h1 className="my-5 text-center">Login</h1>
                 <Form.Group>
